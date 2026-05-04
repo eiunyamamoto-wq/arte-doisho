@@ -1,0 +1,16 @@
+{
+  "name": "施術同意書 — Nail Arte",
+  "short_name": "Nail Arte",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#fdf8f0",
+  "theme_color": "#2c1a0e",
+  "icons": [
+    {
+      "src": "/icon.png",
+      "sizes": "any",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

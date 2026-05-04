@@ -1,0 +1,1173 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>施術同意書 — Nail Arte</title>
+
+  <!-- ホーム画面アイコン（iOS / iPad） -->
+  <link rel="apple-touch-icon" href="/icon.png">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Nail Arte">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+  <!-- Android / Chrome PWA -->
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#2c1a0e">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+    :root {
+      --gold: #b8860b;
+      --gold-light: #d4a843;
+      --cream: #fdf8f0;
+      --beige: #f5ede0;
+      --beige-dark: #e8d9c8;
+      --brown: #6b4c2a;
+      --text: #3a2e22;
+      --text-light: #7a6a56;
+      --pink: #f0d9d0;
+      --accent: #c9956a;
+    }
+
+    body {
+      font-family: 'Hiragino Mincho ProN', 'Yu Mincho', 'MS Mincho', Georgia, serif;
+      background: var(--cream);
+      color: var(--text);
+      font-size: 16px;
+      line-height: 1.8;
+    }
+
+    /* ===== HEADER ===== */
+    .header {
+      background: linear-gradient(135deg, #2c1a0e 0%, #5a3018 40%, #8a5c30 100%);
+      color: #fff;
+      text-align: center;
+      padding: 48px 24px 40px;
+      position: relative;
+      overflow: hidden;
+    }
+    .header::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
+    .header-subtitle { font-size: 13px; letter-spacing: 4px; color: var(--gold-light); margin-bottom: 12px; }
+    .header h1 { font-size: 38px; font-weight: 400; letter-spacing: 8px; color: #fff; margin-bottom: 6px; }
+    .header-en { font-size: 11px; letter-spacing: 6px; color: rgba(255,255,255,0.5); font-family: Georgia, serif; }
+    .gold-line { width: 60px; height: 1px; background: var(--gold-light); margin: 16px auto 0; }
+
+    /* ===== MAIN ===== */
+    .container { max-width: 800px; margin: 0 auto; padding: 0 0 60px; }
+
+    .intro-box {
+      background: var(--beige);
+      border-left: 4px solid var(--gold);
+      margin: 32px 24px;
+      padding: 20px 24px;
+      border-radius: 0 8px 8px 0;
+    }
+    .intro-box p { color: var(--text-light); font-size: 15px; }
+
+    /* ===== SECTION ===== */
+    .section {
+      margin: 0 24px 8px;
+      background: #fff;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    }
+    .section-header {
+      background: linear-gradient(135deg, var(--brown) 0%, var(--accent) 100%);
+      color: #fff;
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .section-num {
+      background: rgba(255,255,255,0.2);
+      border-radius: 50%;
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      flex-shrink: 0;
+    }
+    .section-title { font-size: 17px; letter-spacing: 2px; font-weight: 500; }
+    .section-body { padding: 20px; }
+    .section-body p { color: var(--text); font-size: 15px; margin-bottom: 10px; }
+    .section-body p:last-child { margin-bottom: 0; }
+
+    .bullet-list { list-style: none; padding: 0; }
+    .bullet-list li {
+      padding: 6px 0 6px 20px;
+      position: relative;
+      font-size: 15px;
+      color: var(--text);
+    }
+    .bullet-list li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 14px;
+      width: 8px;
+      height: 8px;
+      background: var(--gold);
+      border-radius: 50%;
+    }
+
+    .notice-box {
+      background: var(--pink);
+      border-radius: 8px;
+      padding: 14px 16px;
+      margin-top: 12px;
+      font-size: 14px;
+      color: var(--brown);
+    }
+
+    /* ===== HEALTH CHECK ===== */
+    .check-group { display: flex; flex-direction: column; gap: 0; }
+    .check-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--beige);
+      cursor: pointer;
+    }
+    .check-item:last-child { border-bottom: none; }
+    .check-item input[type="checkbox"] { display: none; }
+    .check-box {
+      width: 26px;
+      height: 26px;
+      border: 2px solid var(--beige-dark);
+      border-radius: 6px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+      margin-top: 1px;
+    }
+    .check-item input:checked + .check-box {
+      background: var(--gold);
+      border-color: var(--gold);
+    }
+    .check-item input:checked + .check-box::after {
+      content: '✓';
+      color: #fff;
+      font-size: 16px;
+      font-weight: bold;
+    }
+    .check-label { font-size: 15px; color: var(--text); line-height: 1.6; }
+
+    /* ===== PATIENT INFO ===== */
+    .info-section {
+      margin: 8px 24px;
+      background: #fff;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    }
+    .info-header {
+      background: linear-gradient(135deg, #2c1a0e 0%, #5a3018 100%);
+      color: #fff;
+      padding: 14px 20px;
+    }
+    .info-header h3 { font-size: 17px; letter-spacing: 2px; font-weight: 500; }
+    .info-body { padding: 20px; }
+
+    .field-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+    .field-row.full { grid-template-columns: 1fr; }
+    .field-group { display: flex; flex-direction: column; gap: 6px; }
+    .field-label { font-size: 13px; color: var(--text-light); letter-spacing: 1px; }
+    .field-input {
+      border: 1.5px solid var(--beige-dark);
+      border-radius: 8px;
+      padding: 12px 14px;
+      font-size: 16px;
+      font-family: inherit;
+      color: var(--text);
+      background: var(--cream);
+      outline: none;
+      transition: border-color 0.2s;
+      width: 100%;
+      -webkit-appearance: none;
+    }
+    .field-input:focus { border-color: var(--gold); background: #fff; }
+
+    /* ===== DATE PICKER ===== */
+    input[type="date"] {
+      -webkit-appearance: none;
+      appearance: none;
+    }
+
+    /* ===== SIGNATURE ===== */
+    .sig-section {
+      margin: 8px 24px;
+      background: #fff;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    }
+    .sig-header {
+      background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%);
+      color: #fff;
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .sig-header h3 { font-size: 17px; letter-spacing: 2px; font-weight: 500; }
+    .sig-clear-btn {
+      background: rgba(255,255,255,0.25);
+      color: #fff;
+      border: 1px solid rgba(255,255,255,0.4);
+      border-radius: 20px;
+      padding: 6px 16px;
+      font-size: 13px;
+      cursor: pointer;
+      font-family: inherit;
+      letter-spacing: 1px;
+    }
+    .sig-body { padding: 16px; }
+    .sig-hint { font-size: 13px; color: var(--text-light); text-align: center; margin-bottom: 10px; }
+
+    #signatureCanvas {
+      width: 100%;
+      height: 180px;
+      border: 2px dashed var(--beige-dark);
+      border-radius: 10px;
+      background: #fafaf8;
+      display: block;
+      touch-action: none;
+      cursor: crosshair;
+    }
+    #signatureCanvas.has-sig {
+      border-style: solid;
+      border-color: var(--gold);
+    }
+
+    /* ===== CONSENT CHECK ===== */
+    .consent-area {
+      margin: 8px 24px;
+      background: linear-gradient(135deg, var(--beige) 0%, var(--pink) 100%);
+      border-radius: 12px;
+      padding: 24px;
+      border: 2px solid var(--gold-light);
+    }
+    .consent-text {
+      font-size: 16px;
+      color: var(--brown);
+      text-align: center;
+      margin-bottom: 20px;
+      line-height: 1.9;
+    }
+    .consent-check-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      cursor: pointer;
+    }
+    .consent-check-row input { display: none; }
+    .consent-big-box {
+      width: 34px;
+      height: 34px;
+      border: 2px solid var(--gold);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+      flex-shrink: 0;
+    }
+    .consent-check-row input:checked + .consent-big-box {
+      background: var(--gold);
+    }
+    .consent-check-row input:checked + .consent-big-box::after {
+      content: '✓';
+      color: #fff;
+      font-size: 22px;
+      font-weight: bold;
+    }
+    .consent-check-label { font-size: 18px; color: var(--brown); font-weight: 500; }
+
+    /* ===== SUBMIT ===== */
+    .submit-area { margin: 16px 24px; }
+    .submit-btn {
+      width: 100%;
+      background: linear-gradient(135deg, var(--brown) 0%, var(--accent) 100%);
+      color: #fff;
+      border: none;
+      border-radius: 14px;
+      padding: 20px;
+      font-size: 18px;
+      font-family: inherit;
+      letter-spacing: 4px;
+      cursor: pointer;
+      transition: opacity 0.2s, transform 0.1s;
+      box-shadow: 0 4px 20px rgba(107,76,42,0.3);
+    }
+    .submit-btn:active { transform: scale(0.98); opacity: 0.9; }
+    .submit-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+    /* ===== COMPLETE SCREEN ===== */
+    .complete-screen {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(44,26,14,0.92);
+      z-index: 100;
+      align-items: center;
+      justify-content: center;
+      padding: 40px;
+    }
+    .complete-screen.show { display: flex; }
+    .complete-card {
+      background: #fff;
+      border-radius: 20px;
+      padding: 48px 40px;
+      text-align: center;
+      max-width: 400px;
+      width: 100%;
+    }
+    .complete-icon {
+      width: 80px;
+      height: 80px;
+      background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 24px;
+      font-size: 40px;
+    }
+    .complete-card h2 { font-size: 24px; letter-spacing: 4px; color: var(--brown); margin-bottom: 16px; }
+    .complete-card p { font-size: 15px; color: var(--text-light); line-height: 1.8; }
+    .complete-info {
+      background: var(--beige);
+      border-radius: 10px;
+      padding: 16px;
+      margin: 20px 0;
+      font-size: 14px;
+      color: var(--text);
+      line-height: 2;
+      text-align: left;
+    }
+    .complete-sig-preview {
+      border: 1px solid var(--beige-dark);
+      border-radius: 8px;
+      overflow: hidden;
+      margin: 12px 0;
+    }
+    .complete-sig-preview img { width: 100%; display: block; }
+    .new-btn {
+      margin-top: 24px;
+      background: linear-gradient(135deg, var(--brown) 0%, var(--accent) 100%);
+      color: #fff;
+      border: none;
+      border-radius: 12px;
+      padding: 16px 32px;
+      font-size: 16px;
+      font-family: inherit;
+      letter-spacing: 2px;
+      cursor: pointer;
+      width: 100%;
+    }
+
+    /* ===== FOOTER ===== */
+    .footer {
+      text-align: center;
+      padding: 32px 24px;
+      color: var(--text-light);
+      font-size: 12px;
+      letter-spacing: 3px;
+    }
+
+    @media (max-width: 600px) {
+      .header h1 { font-size: 28px; }
+      .field-row { grid-template-columns: 1fr; }
+    }
+
+    /* ===== PDF BUTTON ===== */
+    .pdf-btn {
+      margin-top: 12px;
+      background: #fff;
+      color: var(--brown);
+      border: 2px solid var(--gold);
+      border-radius: 12px;
+      padding: 14px 32px;
+      font-size: 15px;
+      font-family: inherit;
+      letter-spacing: 2px;
+      cursor: pointer;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: background 0.2s;
+    }
+    .pdf-btn:active { background: var(--beige); }
+    .pdf-btn.loading { opacity: 0.6; pointer-events: none; }
+
+    /* ===== PDF TEMPLATE (off-screen) ===== */
+    #pdfTemplate {
+      position: absolute;
+      left: -9999px;
+      top: 0;
+      width: 794px;
+      background: #fff;
+      font-family: 'Hiragino Mincho ProN', 'Yu Mincho', 'MS Mincho', Georgia, serif;
+      color: #3a2e22;
+      font-size: 13px;
+      line-height: 1.7;
+    }
+    .pt-header {
+      background: linear-gradient(135deg, #2c1a0e 0%, #5a3018 40%, #8a5c30 100%);
+      color: #fff;
+      text-align: center;
+      padding: 32px 24px 28px;
+    }
+    .pt-header-sub { font-size: 10px; letter-spacing: 5px; color: #d4a843; margin-bottom: 8px; }
+    .pt-header h1 { font-size: 28px; font-weight: 400; letter-spacing: 8px; color: #fff; margin-bottom: 4px; }
+    .pt-header-en { font-size: 9px; letter-spacing: 5px; color: rgba(255,255,255,0.5); }
+    .pt-gold-bar { width: 40px; height: 1px; background: #d4a843; margin: 10px auto 0; }
+
+    .pt-body { padding: 24px 32px; }
+    .pt-intro {
+      background: #f5ede0;
+      border-left: 3px solid #b8860b;
+      padding: 12px 16px;
+      margin-bottom: 16px;
+      font-size: 12px;
+      color: #7a6a56;
+    }
+    .pt-article { margin-bottom: 14px; }
+    .pt-art-header {
+      background: linear-gradient(135deg, #6b4c2a 0%, #c9956a 100%);
+      color: #fff;
+      padding: 7px 14px;
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 2px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .pt-art-num {
+      background: rgba(255,255,255,0.2);
+      border-radius: 50%;
+      width: 20px; height: 20px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      flex-shrink: 0;
+    }
+    .pt-art-body {
+      border: 1px solid #e8d9c8;
+      border-top: none;
+      padding: 10px 14px;
+      background: #fff;
+    }
+    .pt-art-body p { margin-bottom: 6px; font-size: 12px; }
+    .pt-art-body p:last-child { margin-bottom: 0; }
+    .pt-ul { list-style: none; padding: 0; margin: 4px 0; }
+    .pt-ul li { padding: 2px 0 2px 14px; position: relative; font-size: 12px; }
+    .pt-ul li::before {
+      content: '●';
+      position: absolute;
+      left: 0;
+      color: #b8860b;
+      font-size: 6px;
+      top: 5px;
+    }
+    .pt-notice {
+      background: #f0d9d0;
+      padding: 8px 10px;
+      margin-top: 6px;
+      font-size: 11px;
+      color: #6b4c2a;
+    }
+
+    .pt-divider { border: none; border-top: 1px solid #e8d9c8; margin: 16px 0; }
+
+    .pt-info-section { margin-bottom: 14px; }
+    .pt-info-header {
+      background: linear-gradient(135deg, #2c1a0e 0%, #5a3018 100%);
+      color: #fff;
+      padding: 7px 14px;
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 2px;
+    }
+    .pt-info-table { width: 100%; border-collapse: collapse; border: 1px solid #e8d9c8; border-top: none; }
+    .pt-info-table td { padding: 8px 12px; font-size: 12px; border-bottom: 1px solid #e8d9c8; }
+    .pt-info-table td:first-child { width: 120px; background: #fdf8f0; color: #7a6a56; font-size: 11px; }
+    .pt-info-table tr:last-child td { border-bottom: none; }
+
+    .pt-sig-section { margin-bottom: 14px; }
+    .pt-sig-header {
+      background: linear-gradient(135deg, #b8860b 0%, #d4a843 100%);
+      color: #fff;
+      padding: 7px 14px;
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 2px;
+    }
+    .pt-sig-box {
+      border: 1px solid #e8d9c8;
+      border-top: none;
+      padding: 12px;
+      background: #fff;
+      text-align: center;
+    }
+    .pt-sig-box img { max-width: 100%; height: 100px; object-fit: contain; }
+
+    .pt-consent-box {
+      background: linear-gradient(135deg, #f5ede0 0%, #f0d9d0 100%);
+      border: 1.5px solid #d4a843;
+      padding: 14px 20px;
+      text-align: center;
+      margin-bottom: 16px;
+      font-size: 13px;
+      color: #6b4c2a;
+    }
+    .pt-footer {
+      background: linear-gradient(135deg, #2c1a0e 0%, #5a3018 100%);
+      color: rgba(255,255,255,0.6);
+      text-align: center;
+      padding: 12px;
+      font-size: 10px;
+      letter-spacing: 3px;
+    }
+  </style>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</head>
+<body>
+
+<!-- ===== HEADER ===== -->
+<div class="header">
+  <div class="header-subtitle">N A I L &nbsp; A R T E</div>
+  <h1>施術同意書</h1>
+  <div class="header-en">TREATMENT CONSENT FORM</div>
+  <div class="gold-line"></div>
+</div>
+
+<div class="container">
+
+  <!-- INTRO -->
+  <div class="intro-box">
+    <p>いつも当店をご利用いただき、誠にありがとうございます。本日の施術前に以下の内容をご確認いただき、ご同意いただける場合はご署名をお願いいたします。</p>
+  </div>
+
+  <!-- 第1条 -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">1</div>
+      <div class="section-title">施術内容</div>
+    </div>
+    <div class="section-body">
+      <p>本同意書は、以下の施術に関するものです。</p>
+      <ul class="bullet-list">
+        <li>ジェルネイル</li>
+        <li>ネイルケア</li>
+        <li>ネイルアート（ご希望のデザイン）</li>
+      </ul>
+      <div class="notice-box">施術内容についてご不明な点がございましたら、施術前にスタッフまでお気軽にお問い合わせください。</div>
+    </div>
+  </div>
+
+  <!-- 第2条 -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">2</div>
+      <div class="section-title">健康状態・アレルギー</div>
+    </div>
+    <div class="section-body">
+      <p>現在、以下の項目に該当する事項はございますか？（該当するものにチェックをお願いします）</p>
+      <div class="check-group" id="healthChecks">
+        <label class="check-item">
+          <input type="checkbox" name="health" value="skin">
+          <div class="check-box"></div>
+          <span class="check-label">皮膚疾患、爪の異常（爪白癬、爪甲剥離症など）</span>
+        </label>
+        <label class="check-item">
+          <input type="checkbox" name="health" value="allergy">
+          <div class="check-box"></div>
+          <span class="check-label">アレルギー体質（金属、化学物質など）</span>
+        </label>
+        <label class="check-item">
+          <input type="checkbox" name="health" value="pregnant">
+          <div class="check-box"></div>
+          <span class="check-label">妊娠中、または授乳中</span>
+        </label>
+        <label class="check-item">
+          <input type="checkbox" name="health" value="other">
+          <div class="check-box"></div>
+          <span class="check-label">その他、施術に影響を与える可能性のある健康状態</span>
+        </label>
+        <label class="check-item">
+          <input type="checkbox" name="health" value="none">
+          <div class="check-box"></div>
+          <span class="check-label">上記に該当する項目はありません</span>
+        </label>
+      </div>
+      <div class="notice-box">上記に該当する場合は、必ず施術前にスタッフまでお申し出ください。健康状態によっては施術をお断りさせていただく場合がございます。</div>
+    </div>
+  </div>
+
+  <!-- 第3条 -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">3</div>
+      <div class="section-title">施術後の注意事項</div>
+    </div>
+    <div class="section-body">
+      <ul class="bullet-list">
+        <li>爪を強くぶつけたり、圧迫したりしないようにご注意ください。</li>
+        <li>長時間の水仕事や、洗剤の使用はできる限り避けてください。</li>
+        <li>爪が浮いてきた場合は、無理に剥がさず、当店までご連絡ください。</li>
+        <li>施術後7日以内にジェルネイルが剥がれたり、ストーンが取れたりした場合、無料でお直しいたします。お早めにご連絡ください。</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 第4条 -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">4</div>
+      <div class="section-title">免責事項</div>
+    </div>
+    <div class="section-body">
+      <p>以下の事項につきましては、当店は一切の責任を負いかねますので、あらかじめご了承ください。</p>
+      <ul class="bullet-list">
+        <li>お客様の不注意による爪の損傷、または施術箇所のトラブル</li>
+        <li>施術後のお客様ご自身による爪のお手入れ、または改造</li>
+        <li>アレルギー反応による炎症、または疾患（事前にアレルギーについてお申し出がなかった場合）</li>
+        <li>施術から7日以上経過した場合のお直し</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 第5条 -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">5</div>
+      <div class="section-title">グリーンネイルについて</div>
+    </div>
+    <div class="section-body">
+      <p>グリーンネイル（緑膿菌感染）は、爪とジェルの間に水分が溜まることで発生する可能性があります。当店では衛生管理を徹底しておりますが、完全に防ぐことができない場合もございます。</p>
+      <div class="notice-box">万が一グリーンネイルが発生した場合は、速やかに医療機関を受診してください。治療費はお客様のご負担となりますので、あらかじめご了承ください。</div>
+    </div>
+  </div>
+
+  <!-- 第6条 -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">6</div>
+      <div class="section-title">個人情報の取り扱いについて</div>
+    </div>
+    <div class="section-body">
+      <p>ご記入いただいた個人情報は、施術に関するご連絡、アフターフォロー、および当店のサービス向上のために利用いたします。お客様の同意なく、第三者に個人情報を提供することはございません。当店は、個人情報保護に関する法令を遵守し、お客様の個人情報を適切に管理いたします。</p>
+    </div>
+  </div>
+
+  <!-- お客様情報 -->
+  <div class="info-section">
+    <div class="info-header">
+      <h3>お客様情報</h3>
+    </div>
+    <div class="info-body">
+      <div class="field-row">
+        <div class="field-group">
+          <label class="field-label" for="lastName">姓</label>
+          <input class="field-input" type="text" id="lastName" placeholder="山田">
+        </div>
+        <div class="field-group">
+          <label class="field-label" for="firstName">名</label>
+          <input class="field-input" type="text" id="firstName" placeholder="花子">
+        </div>
+      </div>
+      <div class="field-row">
+        <div class="field-group">
+          <label class="field-label" for="visitDate">来店日</label>
+          <input class="field-input" type="date" id="visitDate">
+        </div>
+        <div class="field-group">
+          <label class="field-label" for="phone">電話番号（任意）</label>
+          <input class="field-input" type="tel" id="phone" placeholder="090-0000-0000">
+        </div>
+      </div>
+      <div class="field-row full">
+        <div class="field-group">
+          <label class="field-label" for="customerEmail">メールアドレス（PDFを受け取る場合はご入力ください）</label>
+          <input class="field-input" type="email" id="customerEmail" placeholder="example@email.com" autocomplete="email">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 署名 -->
+  <div class="sig-section">
+    <div class="sig-header">
+      <h3>ご署名</h3>
+      <button class="sig-clear-btn" id="clearBtn" onclick="clearSignature()">クリア</button>
+    </div>
+    <div class="sig-body">
+      <p class="sig-hint">指またはApple Pencilでご署名ください</p>
+      <canvas id="signatureCanvas"></canvas>
+    </div>
+  </div>
+
+  <!-- 同意チェック -->
+  <div class="consent-area">
+    <p class="consent-text">上記の内容をすべて確認し、<br>同意の上で施術を受けることに同意します。</p>
+    <label class="consent-check-row">
+      <input type="checkbox" id="consentCheck" onchange="updateSubmitBtn()">
+      <div class="consent-big-box"></div>
+      <span class="consent-check-label">同意します</span>
+    </label>
+  </div>
+
+  <!-- 送信 -->
+  <div class="submit-area">
+    <button class="submit-btn" id="submitBtn" disabled onclick="handleSubmit()">
+      同意書を確定する
+    </button>
+  </div>
+
+  <div class="footer">Nail Arte &nbsp;|&nbsp; 施術同意書</div>
+</div>
+
+<!-- ===== 完了画面 ===== -->
+<div class="complete-screen" id="completeScreen">
+  <div class="complete-card">
+    <div class="complete-icon">✓</div>
+    <h2>ご同意完了</h2>
+    <p>同意書へのご署名ありがとうございました。<br>それでは施術を開始いたします。</p>
+    <div class="complete-info" id="completeInfo"></div>
+    <div id="emailStatus" style="font-size:13px;margin:8px 0;padding:10px 14px;border-radius:8px;text-align:left;display:none;"></div>
+    <div class="complete-sig-preview">
+      <img id="sigPreviewImg" src="" alt="署名">
+    </div>
+    <button class="pdf-btn" id="pdfBtn" onclick="savePDF()">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14,2 14,8 20,8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/></svg>
+      PDFを保存する
+    </button>
+    <button class="new-btn" onclick="resetForm()">次のお客様へ</button>
+  </div>
+</div>
+
+<!-- ===== PDF テンプレート（非表示・オフスクリーン） ===== -->
+<div id="pdfTemplate">
+  <div class="pt-header">
+    <div class="pt-header-sub">N A I L &nbsp; A R T E</div>
+    <h1>施術同意書</h1>
+    <div class="pt-header-en">TREATMENT CONSENT FORM</div>
+    <div class="pt-gold-bar"></div>
+  </div>
+  <div class="pt-body">
+    <div class="pt-intro">いつも当店をご利用いただき、誠にありがとうございます。本日の施術前に以下の内容をご確認いただき、ご同意いただける場合はご署名をお願いいたします。</div>
+
+    <div class="pt-article">
+      <div class="pt-art-header"><span class="pt-art-num">1</span>施術内容</div>
+      <div class="pt-art-body">
+        <p>本同意書は、以下の施術に関するものです。</p>
+        <ul class="pt-ul"><li>ジェルネイル</li><li>ネイルケア</li><li>ネイルアート（ご希望のデザイン）</li></ul>
+      </div>
+    </div>
+
+    <div class="pt-article">
+      <div class="pt-art-header"><span class="pt-art-num">2</span>健康状態・アレルギー</div>
+      <div class="pt-art-body">
+        <p>現在、以下の項目に該当する事項はございますか？</p>
+        <ul class="pt-ul">
+          <li>皮膚疾患、爪の異常（爪白癬、爪甲剥離症など）</li>
+          <li>アレルギー体質（金属、化学物質など）</li>
+          <li>妊娠中、または授乳中</li>
+          <li>その他、施術に影響を与える可能性のある健康状態</li>
+        </ul>
+        <div class="pt-notice">上記に該当する場合は、必ず施術前にスタッフまでお申し出ください。健康状態によっては施術をお断りさせていただく場合がございます。</div>
+      </div>
+    </div>
+
+    <div class="pt-article">
+      <div class="pt-art-header"><span class="pt-art-num">3</span>施術後の注意事項</div>
+      <div class="pt-art-body">
+        <ul class="pt-ul">
+          <li>爪を強くぶつけたり、圧迫したりしないようにご注意ください。</li>
+          <li>長時間の水仕事や、洗剤の使用はできる限り避けてください。</li>
+          <li>爪が浮いてきた場合は、無理に剥がさず、当店までご連絡ください。</li>
+          <li>施術後7日以内にジェルネイルが剥がれたり、ストーンが取れたりした場合、無料でお直しいたします。</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="pt-article">
+      <div class="pt-art-header"><span class="pt-art-num">4</span>免責事項</div>
+      <div class="pt-art-body">
+        <p>以下の事項につきましては、当店は一切の責任を負いかねますので、あらかじめご了承ください。</p>
+        <ul class="pt-ul">
+          <li>お客様の不注意による爪の損傷、または施術箇所のトラブル</li>
+          <li>施術後のお客様ご自身による爪のお手入れ、または改造</li>
+          <li>アレルギー反応による炎症、または疾患（事前にアレルギーについてお申し出がなかった場合）</li>
+          <li>施術から7日以上経過した場合のお直し</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="pt-article">
+      <div class="pt-art-header"><span class="pt-art-num">5</span>グリーンネイルについて</div>
+      <div class="pt-art-body">
+        <p>グリーンネイル（緑膿菌感染）は、爪とジェルの間に水分が溜まることで発生する可能性があります。当店では衛生管理を徹底しておりますが、完全に防ぐことができない場合もございます。</p>
+        <div class="pt-notice">万が一グリーンネイルが発生した場合は、速やかに医療機関を受診してください。治療費はお客様のご負担となります。</div>
+      </div>
+    </div>
+
+    <div class="pt-article">
+      <div class="pt-art-header"><span class="pt-art-num">6</span>個人情報の取り扱いについて</div>
+      <div class="pt-art-body">
+        <p>ご記入いただいた個人情報は、施術に関するご連絡、アフターフォロー、および当店のサービス向上のために利用いたします。お客様の同意なく、第三者に個人情報を提供することはございません。当店は、個人情報保護に関する法令を遵守し、お客様の個人情報を適切に管理いたします。</p>
+      </div>
+    </div>
+
+    <hr class="pt-divider">
+
+    <div class="pt-info-section">
+      <div class="pt-info-header">お客様情報</div>
+      <table class="pt-info-table">
+        <tr><td>お名前</td><td id="pt-name"></td></tr>
+        <tr><td>来店日</td><td id="pt-date"></td></tr>
+        <tr><td>電話番号</td><td id="pt-phone"></td></tr>
+        <tr><td>メール</td><td id="pt-email"></td></tr>
+        <tr><td>健康状態</td><td id="pt-health"></td></tr>
+      </table>
+    </div>
+
+    <div class="pt-sig-section">
+      <div class="pt-sig-header">ご署名</div>
+      <div class="pt-sig-box">
+        <img id="pt-sig-img" src="" alt="署名">
+      </div>
+    </div>
+
+    <div class="pt-consent-box">
+      上記の内容をすべて確認し、同意の上で施術を受けることに同意します。<br>
+      <strong id="pt-consent-date"></strong>
+    </div>
+  </div>
+  <div class="pt-footer">Nail Arte &nbsp;|&nbsp; 施術同意書</div>
+</div>
+
+<script>
+  // ===== 日付デフォルト =====
+  (function() {
+    const today = new Date();
+    const y = today.getFullYear();
+    const m = String(today.getMonth() + 1).padStart(2, '0');
+    const d = String(today.getDate()).padStart(2, '0');
+    document.getElementById('visitDate').value = `${y}-${m}-${d}`;
+  })();
+
+  // ===== Canvas setup =====
+  const canvas = document.getElementById('signatureCanvas');
+  const ctx = canvas.getContext('2d');
+  let drawing = false;
+  let hasSig = false;
+  let lastX = 0, lastY = 0;
+
+  function resizeCanvas() {
+    const rect = canvas.getBoundingClientRect();
+    const dpr = window.devicePixelRatio || 1;
+    // Save existing drawing
+    const imgData = canvas.toDataURL();
+    canvas.width = rect.width * dpr;
+    canvas.height = rect.height * dpr;
+    ctx.scale(dpr, dpr);
+    ctx.strokeStyle = '#2c1a0e';
+    ctx.lineWidth = 2.5;
+    ctx.lineCap = 'round';
+    ctx.lineJoin = 'round';
+    // Restore
+    if (hasSig) {
+      const img = new Image();
+      img.onload = () => ctx.drawImage(img, 0, 0, rect.width, rect.height);
+      img.src = imgData;
+    }
+  }
+
+  function getPos(e) {
+    const rect = canvas.getBoundingClientRect();
+    if (e.touches) {
+      return { x: e.touches[0].clientX - rect.left, y: e.touches[0].clientY - rect.top };
+    }
+    return { x: e.clientX - rect.left, y: e.clientY - rect.top };
+  }
+
+  function startDraw(e) {
+    e.preventDefault();
+    drawing = true;
+    const pos = getPos(e);
+    lastX = pos.x; lastY = pos.y;
+    ctx.beginPath();
+    ctx.moveTo(lastX, lastY);
+  }
+
+  function draw(e) {
+    if (!drawing) return;
+    e.preventDefault();
+    const pos = getPos(e);
+    ctx.beginPath();
+    ctx.moveTo(lastX, lastY);
+    ctx.lineTo(pos.x, pos.y);
+    ctx.stroke();
+    lastX = pos.x; lastY = pos.y;
+    if (!hasSig) {
+      hasSig = true;
+      canvas.classList.add('has-sig');
+      updateSubmitBtn();
+    }
+  }
+
+  function stopDraw(e) {
+    if (e) e.preventDefault();
+    drawing = false;
+  }
+
+  canvas.addEventListener('mousedown', startDraw);
+  canvas.addEventListener('mousemove', draw);
+  canvas.addEventListener('mouseup', stopDraw);
+  canvas.addEventListener('mouseleave', stopDraw);
+  canvas.addEventListener('touchstart', startDraw, { passive: false });
+  canvas.addEventListener('touchmove', draw, { passive: false });
+  canvas.addEventListener('touchend', stopDraw, { passive: false });
+
+  window.addEventListener('resize', resizeCanvas);
+  resizeCanvas();
+
+  function clearSignature() {
+    const rect = canvas.getBoundingClientRect();
+    ctx.clearRect(0, 0, rect.width, rect.height);
+    hasSig = false;
+    canvas.classList.remove('has-sig');
+    updateSubmitBtn();
+  }
+
+  // ===== Submit button state =====
+  function updateSubmitBtn() {
+    const consent = document.getElementById('consentCheck').checked;
+    const btn = document.getElementById('submitBtn');
+    btn.disabled = !(consent && hasSig);
+  }
+
+  // ===== グローバル状態 =====
+  let formData = {};
+  let cachedPdfBase64 = null;
+
+  // ===== PDFテンプレートを描画してbase64を返す =====
+  async function buildPDFBase64(data) {
+    document.getElementById('pt-name').textContent = data.name || '未入力';
+    document.getElementById('pt-date').textContent = data.dateStr || '未選択';
+    document.getElementById('pt-phone').textContent = data.phone || '—';
+    document.getElementById('pt-email').textContent = data.email || '—';
+    document.getElementById('pt-health').textContent = data.healthStr || '未回答';
+    document.getElementById('pt-sig-img').src = data.sigDataUrl || '';
+    document.getElementById('pt-consent-date').textContent =
+      `同意日：${data.dateStr || ''}　　お名前：${data.name || ''}`;
+
+    // 署名画像のロード完了を待つ
+    await new Promise(resolve => {
+      const img = document.getElementById('pt-sig-img');
+      if (img.complete) return resolve();
+      img.onload = resolve;
+      img.onerror = resolve;
+    });
+
+    const template = document.getElementById('pdfTemplate');
+    const cvs = await html2canvas(template, {
+      scale: 2,
+      useCORS: true,
+      logging: false,
+      backgroundColor: '#ffffff'
+    });
+
+    const { jsPDF } = window.jspdf;
+    const pdf = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
+    const pageW = pdf.internal.pageSize.getWidth();
+    const pageH = pdf.internal.pageSize.getHeight();
+    const imgW = pageW;
+    const imgH = (cvs.height * imgW) / cvs.width;
+    const imgData = cvs.toDataURL('image/jpeg', 0.92);
+
+    let remaining = imgH;
+    let srcY = 0;
+    let isFirst = true;
+    while (remaining > 0) {
+      if (!isFirst) pdf.addPage();
+      isFirst = false;
+      pdf.addImage(imgData, 'JPEG', 0, -srcY, imgW, imgH);
+      srcY += pageH;
+      remaining -= pageH;
+      if (remaining > 0) {
+        pdf.setFillColor(255, 255, 255);
+        pdf.rect(0, pageH - 1, pageW, 2, 'F');
+      }
+    }
+
+    // base64文字列を返す（data:...の先頭を除く）
+    return pdf.output('datauristring').split(',')[1];
+  }
+
+  // ===== PDFをダウンロード保存 =====
+  function savePDF() {
+    if (!cachedPdfBase64) {
+      alert('PDFデータがありません。もう一度お試しください。');
+      return;
+    }
+    const byteChars = atob(cachedPdfBase64);
+    const byteNums = new Array(byteChars.length);
+    for (let i = 0; i < byteChars.length; i++) byteNums[i] = byteChars.charCodeAt(i);
+    const blob = new Blob([new Uint8Array(byteNums)], { type: 'application/pdf' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `施術同意書_${(formData.name || '').replace(/\s/g, '')}_${formData.dateStr || ''}.pdf`;
+    a.target = '_blank';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    setTimeout(() => URL.revokeObjectURL(url), 5000);
+  }
+
+  // ===== 同意確定：PDF生成＋メール送信＋完了画面表示 =====
+  async function handleSubmit() {
+    const btn = document.getElementById('submitBtn');
+    btn.disabled = true;
+    btn.textContent = '処理中...';
+
+    // フォームデータ収集
+    const lastName  = document.getElementById('lastName').value.trim();
+    const firstName = document.getElementById('firstName').value.trim();
+    const dateVal   = document.getElementById('visitDate').value;
+    const phone     = document.getElementById('phone').value.trim();
+    const email     = document.getElementById('customerEmail').value.trim();
+
+    const name = (lastName || firstName) ? `${lastName} ${firstName}`.trim() : '未入力';
+    let dateStr = '未選択';
+    if (dateVal) {
+      const d = new Date(dateVal + 'T00:00:00');
+      dateStr = `${d.getFullYear()}年${d.getMonth()+1}月${d.getDate()}日`;
+    }
+
+    const checked = [...document.querySelectorAll('input[name="health"]:checked')];
+    const healthMap = {
+      skin: '皮膚疾患・爪の異常', allergy: 'アレルギー体質',
+      pregnant: '妊娠中・授乳中', other: 'その他健康上の注意', none: '該当なし'
+    };
+    const healthStr = checked.length ? checked.map(c => healthMap[c.value]).join('、') : '未回答';
+    const sigDataUrl = canvas.toDataURL('image/png');
+
+    formData = { name, dateStr, phone, email, healthStr, sigDataUrl };
+
+    try {
+      // PDF生成
+      cachedPdfBase64 = await buildPDFBase64(formData);
+
+      // メール送信
+      const resp = await fetch('/api/send-email', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          customerEmail: email,
+          customerName: name,
+          visitDate: dateStr,
+          pdfBase64: cachedPdfBase64,
+          health: healthStr
+        })
+      });
+
+      // メール送信ステータスを表示
+      const statusEl = document.getElementById('emailStatus');
+      statusEl.style.display = 'block';
+      let respJson = {};
+      try { respJson = await resp.json(); } catch (_) {}
+
+      if (resp.ok) {
+        const msgs = [];
+        if (email) msgs.push(`✓ ${email} に同意書PDFをお送りしました`);
+        msgs.push('✓ サロンの控えとしても保存されました');
+        statusEl.style.background = '#e8f5e9';
+        statusEl.style.color = '#2e7d32';
+        statusEl.innerHTML = msgs.join('<br>');
+      } else {
+        const errDetail = respJson.error || `HTTPエラー ${resp.status}`;
+        statusEl.style.background = '#fff3e0';
+        statusEl.style.color = '#e65100';
+        statusEl.innerHTML =
+          '⚠ メール送信に失敗しました。「PDFを保存する」から手動でダウンロードしてください。<br>' +
+          `<small style="opacity:0.8">詳細: ${errDetail}</small>`;
+      }
+    } catch (err) {
+      cachedPdfBase64 = null;
+      const statusEl = document.getElementById('emailStatus');
+      statusEl.style.display = 'block';
+      statusEl.style.background = '#ffebee';
+      statusEl.style.color = '#c62828';
+      statusEl.innerHTML =
+        '⚠ エラーが発生しました。「PDFを保存する」から手動でダウンロードしてください。<br>' +
+        `<small style="opacity:0.8">詳細: ${err.message}</small>`;
+    }
+
+    // 完了画面
+    document.getElementById('completeInfo').innerHTML =
+      `<b>お名前：</b>${name}<br>` +
+      `<b>来店日：</b>${dateStr}<br>` +
+      `${phone ? `<b>電話番号：</b>${phone}<br>` : ''}` +
+      `${email ? `<b>メール：</b>${email}<br>` : ''}` +
+      `<b>健康状態：</b>${healthStr}`;
+
+    document.getElementById('sigPreviewImg').src = sigDataUrl;
+    document.getElementById('completeScreen').classList.add('show');
+
+    btn.disabled = false;
+    btn.textContent = '同意書を確定する';
+  }
+
+  // ===== Reset =====
+  function resetForm() {
+    document.getElementById('completeScreen').classList.remove('show');
+    document.getElementById('lastName').value = '';
+    document.getElementById('firstName').value = '';
+    document.getElementById('phone').value = '';
+    document.getElementById('customerEmail').value = '';
+    const statusEl = document.getElementById('emailStatus');
+    statusEl.style.display = 'none';
+    statusEl.textContent = '';
+    cachedPdfBase64 = null;
+    // reset date to today
+    const today = new Date();
+    const y = today.getFullYear();
+    const m = String(today.getMonth() + 1).padStart(2, '0');
+    const d2 = String(today.getDate()).padStart(2, '0');
+    document.getElementById('visitDate').value = `${y}-${m}-${d2}`;
+    document.querySelectorAll('input[name="health"]').forEach(c => c.checked = false);
+    document.getElementById('consentCheck').checked = false;
+    clearSignature();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+</script>
+</body>
+</html>
