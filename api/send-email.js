@@ -1,10 +1,62 @@
 const nodemailer = require('nodemailer');
+const crypto = require('crypto');
 
-// Vercel serverless: body を手動パース（大きなJSONに対応）
+const ALLOWED_ORIGINS = ['https://artedoisho.vercel.app'];
+
+// リクエスト上限: 5MB（base64 PDF込み）
+const MAX_BODY_SIZE = 5 * 1024 * 1024;
+
+// IPレート制限: 1時間に30件まで（サロンWiFi共有を考慮）
+const RATE_LIMIT_WINDOW_MS = 60 * 60 * 1000;
+const RATE_LIMIT_MAX = 30;
+const rateLimitMap = new Map();
+
+function checkRateLimit(ip) {
+  const now = Date.now();
+  const entry = rateLimitMap.get(ip);
+  if (!entry || now - entry.start > RATE_LIMIT_WINDOW_MS) {
+    rateLimitMap.set(ip, { start: now, count: 1 });
+    return true;
+  }
+  if (entry.count >= RATE_LIMIT_MAX) return false;
+  entry.count++;
+  return true;
+}
+
+function getClientIP(req) {
+  const forwarded = req.headers['x-forwarded-for'];
+  if (forwarded) return forwarded.split(',')[0].trim();
+  return req.socket?.remoteAddress || 'unknown';
+}
+
+// HMACトークンを検証（5分ウィンドウ、前後1ウィンドウ許容）
+function validateToken(token) {
+  const secret = process.env.API_SECRET;
+  if (!secret || !token || token.length !== 64) return false;
+  const now = Math.floor(Date.now() / (5 * 60 * 1000));
+  for (const w of [now, now - 1]) {
+    const expected = crypto.createHmac('sha256', secret).update(String(w)).digest('hex');
+    try {
+      if (crypto.timingSafeEqual(Buffer.from(token, 'hex'), Buffer.from(expected, 'hex'))) {
+        return true;
+      }
+    } catch (_) {}
+  }
+  return false;
+}
+
 function parseBody(req) {
   return new Promise((resolve, reject) => {
     let data = '';
-    req.on('data', chunk => { data += chunk; });
+    let size = 0;
+    req.on('data', chunk => {
+      size += chunk.length;
+      if (size > MAX_BODY_SIZE) {
+        reject(new Error('リクエストサイズが上限（5MB）を超えています'));
+        return;
+      }
+      data += chunk;
+    });
     req.on('end', () => {
       try { resolve(JSON.parse(data)); }
       catch (e) { reject(new Error('JSON parse error: ' + e.message)); }
@@ -14,10 +66,6 @@ function parseBody(req) {
 }
 
 module.exports = async function handler(req, res) {
-  // CORS ヘッダー
-  const ALLOWED_ORIGINS = [
-    'https://artedoisho.vercel.app',
-  ];
   const origin = req.headers.origin;
   if (ALLOWED_ORIGINS.includes(origin)) {
     res.setHeader('Access-Control-Allow-Origin', origin);
@@ -27,6 +75,13 @@ module.exports = async function handler(req, res) {
   if (req.method === 'OPTIONS') return res.status(200).end();
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
+  // IPレート制限
+  const ip = getClientIP(req);
+  if (!checkRateLimit(ip)) {
+    console.warn('[send-email] rate limit exceeded:', ip);
+    return res.status(429).json({ error: 'しばらく時間をおいてから再度お試しください' });
+  }
+
   let body;
   try {
     body = await parseBody(req);
@@ -35,7 +90,13 @@ module.exports = async function handler(req, res) {
     return res.status(400).json({ error: 'リクエスト解析エラー: ' + e.message });
   }
 
-  const { customerEmail, customerName, visitDate, pdfBase64, health } = body;
+  const { customerEmail, customerName, visitDate, pdfBase64, health, token } = body;
+
+  // トークン検証
+  if (!validateToken(token)) {
+    console.warn('[send-email] invalid token from:', ip);
+    return res.status(403).json({ error: '不正なリクエストです。ページを再読み込みしてお試しください。' });
+  }
 
   if (!pdfBase64) {
     return res.status(400).json({ error: 'PDFデータがありません' });
@@ -49,7 +110,6 @@ module.exports = async function handler(req, res) {
     return res.status(500).json({ error: 'メール設定が未完了です（環境変数なし）' });
   }
 
-  // Gmail SMTP（ポート465 / SSL）で接続
   const transporter = nodemailer.createTransport({
     host: 'smtp.gmail.com',
     port: 465,
@@ -57,7 +117,6 @@ module.exports = async function handler(req, res) {
     auth: { user: gmailUser, pass: gmailPass },
   });
 
-  // 接続テスト
   try {
     await transporter.verify();
   } catch (e) {
@@ -71,7 +130,6 @@ module.exports = async function handler(req, res) {
 
   const errors = [];
 
-  // お客様へのメール
   if (customerEmail) {
     try {
       await transporter.sendMail({
@@ -93,14 +151,13 @@ module.exports = async function handler(req, res) {
         ].join('\n'),
         attachments: [{ filename: fileName, content: pdfBuffer, contentType: 'application/pdf' }],
       });
-      console.log('[send-email] customer email sent to', customerEmail);
+      console.log('[send-email] customer email sent');
     } catch (e) {
       console.error('[send-email] customer email error:', e.message);
       errors.push('お客様へのメール送信エラー: ' + e.message);
     }
   }
 
-  // オーナーへの控えメール
   try {
     await transporter.sendMail({
       from: `Nail Arte <${gmailUser}>`,
