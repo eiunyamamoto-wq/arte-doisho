@@ -1136,6 +1136,12 @@
         statusEl.style.background = '#fff3e0';
         statusEl.style.color = '#e65100';
         statusEl.innerHTML = '⚠ セッションの有効期限が切れました。もう一度「同意書を確定する」を押してください。';
+      } else if (resp.status === 413) {
+        statusEl.style.background = '#fff3e0';
+        statusEl.style.color = '#e65100';
+        statusEl.innerHTML =
+          '⚠ PDFのサイズが大きすぎてメール送信できませんでした。<br>' +
+          '「PDFを保存する」から手動でダウンロードしてください。';
       } else {
         const errDetail = respJson.error || `HTTPエラー ${resp.status}`;
         statusEl.style.background = '#fff3e0';
