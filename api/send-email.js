@@ -104,10 +104,16 @@ module.exports = async function handler(req, res) {
 
   const gmailUser = process.env.GMAIL_USER;
   const gmailPass = process.env.GMAIL_APP_PASSWORD;
+  const ownerEmail = process.env.OWNER_EMAIL;
 
   if (!gmailUser || !gmailPass) {
     console.error('[send-email] env vars missing');
     return res.status(500).json({ error: 'メール設定が未完了です（環境変数なし）' });
+  }
+
+  if (!ownerEmail) {
+    console.error('[send-email] OWNER_EMAIL が設定されていません');
+    return res.status(500).json({ error: 'オーナーメールアドレスが未設定です' });
   }
 
   const transporter = nodemailer.createTransport({
@@ -161,7 +167,7 @@ module.exports = async function handler(req, res) {
   try {
     await transporter.sendMail({
       from: `Nail Arte <${gmailUser}>`,
-      to: 'krmt1231@gmail.com',
+      to: ownerEmail,
       subject: `【控え】${customerName}様の施術同意書（${visitDate}）`,
       text: [
         `${customerName}様の施術同意書（控え）です。`,
