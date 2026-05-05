@@ -976,6 +976,23 @@
   // ===== グローバル状態 =====
   let formData = {};
   let cachedPdfBase64 = null;
+  let apiToken = null;
+
+  async function fetchToken() {
+    try {
+      const resp = await fetch('/api/get-token');
+      if (resp.ok) {
+        const data = await resp.json();
+        apiToken = data.token;
+      }
+    } catch (e) {
+      console.warn('トークン取得失敗:', e.message);
+    }
+  }
+
+  fetchToken();
+  // 4分ごとに更新（5分ウィンドウの期限切れを防ぐ）
+  setInterval(fetchToken, 4 * 60 * 1000);
 
   // ===== PDFテンプレートを描画してbase64を返す =====
   async function buildPDFBase64(data) {
@@ -1095,7 +1112,8 @@
           customerName: name,
           visitDate: dateStr,
           pdfBase64: cachedPdfBase64,
-          health: healthStr
+          health: healthStr,
+          token: apiToken
         })
       });
 
@@ -1112,6 +1130,12 @@
         statusEl.style.background = '#e8f5e9';
         statusEl.style.color = '#2e7d32';
         statusEl.innerHTML = msgs.join('<br>');
+      } else if (resp.status === 403) {
+        // トークン切れの場合は再取得して案内
+        await fetchToken();
+        statusEl.style.background = '#fff3e0';
+        statusEl.style.color = '#e65100';
+        statusEl.innerHTML = '⚠ セッションの有効期限が切れました。もう一度「同意書を確定する」を押してください。';
       } else {
         const errDetail = respJson.error || `HTTPエラー ${resp.status}`;
         statusEl.style.background = '#fff3e0';
