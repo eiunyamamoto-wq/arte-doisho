@@ -52,7 +52,9 @@ function parseBody(req) {
     req.on('data', chunk => {
       size += chunk.length;
       if (size > MAX_BODY_SIZE) {
-        reject(new Error('リクエストサイズが上限（5MB）を超えています'));
+        const err = new Error('リクエストサイズが上限（5MB）を超えています');
+        err.code = 'PAYLOAD_TOO_LARGE';
+        reject(err);
         return;
       }
       data += chunk;
@@ -86,6 +88,10 @@ module.exports = async function handler(req, res) {
   try {
     body = await parseBody(req);
   } catch (e) {
+    if (e.code === 'PAYLOAD_TOO_LARGE') {
+      console.warn('[send-email] payload too large from:', ip);
+      return res.status(413).json({ error: e.message });
+    }
     console.error('[send-email] body parse error:', e.message);
     return res.status(400).json({ error: 'リクエスト解析エラー: ' + e.message });
   }
